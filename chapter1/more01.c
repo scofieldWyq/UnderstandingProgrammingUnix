@@ -5,7 +5,7 @@
 
 /* declearing */
 void do_more(FILE *);
-int see_more();
+int see_more(FILE *);
 
 int main(int ac, char *av[])
 {
@@ -29,14 +29,19 @@ int main(int ac, char *av[])
 void do_more(FILE *fp)
 {
 	char line[PAGELEN];
-	int see_more(), reply;
+	int see_more(FILE *), reply;
 	int num_of_line = 0;
+    FILE *fp_tty;
+
+	fp_tty = fopen("/dev/tty", "r");
+	if (fp_tty == NULL)
+		exit(0);
 
 	while(fgets(line, LINELEN, fp)) /* read more chars */
 	{
 		if (num_of_line == PAGELEN) /* is full screen */
 		{
-			reply = see_more();
+			reply = see_more(fp_tty);
 			if (reply == 0)
 				break;
 
@@ -50,12 +55,12 @@ void do_more(FILE *fp)
 	}
 }
 
-int see_more()
+int see_more(FILE *fp_tty)
 {
 	int c;
 	printf("\033[7m more? \033[m");
 
-	while((c = getchar()) != EOF)
+	while((c = getc(fp_tty)) != EOF)
 	{
 		if (c == 'q')
 			return 0;
