@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #define PAGELEN 24
 #define LINELEN 512
 
@@ -14,7 +15,7 @@ int main(int ac, char *av[])
 
 	else
 		while(--ac)
-			if(fp = fopen(*++av, 'r') != NULL)
+			if((fp = fopen(*++av, "r")) != NULL)
 			{
 				do_more(fp);
 				fclose(fp);
@@ -31,7 +32,7 @@ void do_more(FILE *fp)
 	int see_more(), reply;
 	int num_of_line = 0;
 
-	while(fgets(line, LINELEN, fp) != EOF) /* read more chars */
+	while(fgets(line, LINELEN, fp)) /* read more chars */
 	{
 		if (num_of_line == PAGELEN) /* is full screen */
 		{
@@ -66,7 +67,6 @@ int see_more()
 
 	return 0;
 }
-	while((c = ))
 
 
 
