@@ -24,3 +24,32 @@ int main(int ac, char *av[])
 				exit(0);
 	return 0;
 }
+
+void do_more(FILE *fp)
+{
+	int c;
+	char line[PAGELEN];
+	int see_more(), reply;
+	int num_of_line = 0;
+
+	while(fgets(line, LINELEN, fp) != EOF) /* read more chars */
+	{
+		if (num_of_line == PAGELEN) /* is full screen */
+		{
+			reply = see_more();
+			if (reply == 0)
+				break;
+
+			num_of_line -= reply; /* reset */
+		}
+
+		if(fputs(line, stdout) == EOF)
+			exit(1);
+
+		num_of_line ++;
+	}
+}
+
+
+
+
