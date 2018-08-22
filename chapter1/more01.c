@@ -27,7 +27,6 @@ int main(int ac, char *av[])
 
 void do_more(FILE *fp)
 {
-	int c;
 	char line[PAGELEN];
 	int see_more(), reply;
 	int num_of_line = 0;
@@ -49,6 +48,25 @@ void do_more(FILE *fp)
 		num_of_line ++;
 	}
 }
+
+int see_more()
+{
+	int c;
+	printf("\033[7m more? \033[m");
+
+	while((c = getchar()) != EOF)
+	{
+		if (c == 'q')
+			return 0;
+		if (c == ' ')
+			return PAGELEN;
+		if (c == '\n')
+			return 1;
+	}
+
+	return 0;
+}
+	while((c = ))
 
 
 
